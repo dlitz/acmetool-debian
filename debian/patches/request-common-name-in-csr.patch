@@ -1,0 +1,27 @@
+Description: Request CN explicitly in CSR to preserve ordering
+ This is a workaround for Boulder issue #1469.
+ .
+ https://github.com/letsencrypt/boulder/issues/1469
+Author: Hugo Landau <hlandau@devever.net>
+Origin: https://github.com/hlandau/acme/commit/a592f9cd7733a0bc2e7030c921e557c172745ade
+Last-Update: 2016-03-07
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/storageops/reconcile.go
++++ b/storageops/reconcile.go
+@@ -705,8 +705,15 @@ var (
+ )
+ 
+ func (r *reconcile) createCSR(t *storage.Target) ([]byte, error) {
++	if len(t.Request.Names) == 0 {
++		return nil, fmt.Errorf("cannot request a certificate with no names")
++	}
++
+ 	csr := &x509.CertificateRequest{
+ 		DNSNames: t.Request.Names,
++		Subject: pkix.Name{
++			CommonName: t.Request.Names[0],
++		},
+ 	}
+ 
+ 	if t.Request.OCSPMustStaple {

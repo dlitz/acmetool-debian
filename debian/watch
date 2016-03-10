@@ -1,0 +1,3 @@
+version=3
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/acme-$1\.tar\.gz/ \
+  https://github.com/hlandau/acme/tags .*/v?(\d\S*)\.tar\.gz

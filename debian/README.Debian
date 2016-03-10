@@ -1,0 +1,94 @@
+acmetool for Debian
+===================
+
+Please refer to the User's Guide for acmetool at
+
+https://hlandau.github.io/acme/userguide
+
+The format of acmetool's state directory is described in
+
+/usr/share/doc/acmetool/SCHEMA.md.gz
+
+For a general overview of Let's Encrypt see
+
+https://letsencrypt.org/how-it-works/
+
+
+Running as non-root
+-------------------
+
+Unless you have specific requirements, you may run acmetool as a
+non-root user. To add a user/group "acme" for this purpose, run
+
+adduser --system --group --home /var/lib/acme --disabled-password --disabled-login acme
+
+You may then run acmetool with
+
+sudo -u acme acmetool
+
+For troubleshooting, you may enable verbose output using
+
+sudo -u acme acmetool --xlog.severity=debug
+
+
+Webroot mode
+------------
+
+acmetool is configured to write challenge files to the directory
+/var/run/acme/acme-challenge by default. Your web server on port 80
+must be set up to alias /.well-known/acme-challenge to the directory.
+
+For the nginx webserver, for example, include the following stanza
+for each virtual host for which you wish to obtain a certificate.
+
+location /.well-known/acme-challenge/ {
+        alias /var/run/acme/acme-challenge/;
+        default_type application/jose+json;
+}
+
+When running acmetool as a non-root user, you need to create the
+directory /var/run/acme, which may be done at boot by configuring
+
+# /etc/tmpfiles.d/acme.conf
+d /var/run/acme 0755 acme acme - -
+
+
+Obtaining test certificates
+---------------------------
+
+Let's Encrypt provides a staging server that may be used to obtain test
+certificates, which is useful for testing your setup repeatedly without
+hitting the various rate limits enforced by the production server. These
+certificates are signed by a fake CA and will not validate in a browser.
+
+You may use the quickstart wizard
+
+sudo -u acme acmetool quickstart
+
+to select "Let's Encrypt (Staging)". After confirming with "OK", you may
+quit the wizard with "Cancel" if you wish to use the default challenge
+settings, such as webroot mode with the default path described above.
+
+The wizard writes the default configuration to /var/lib/acme/conf/target.
+
+To request one certificate for a set of hostnames, run
+
+sudo -u acme acmetool want example.com www.example.com
+
+This creates a target file /var/lib/acme/desired/example.com-*.
+
+Whenever you rerun acmetool, regardless of any arguments, it will try to
+satisfy the desired certificate targets. If a certificate is less than
+30 days from expiry (or 1/3 of the validity period, whichever is shorter),
+the certificate will be automatically renewed.
+
+
+Hook scripts
+------------
+
+After obtaining a certificate, acmetool runs any executable files in
+the directory /etc/acme/hooks. When running acmetool as a non-root user,
+you may configure sudo to permit that user to reload your web server:
+
+# /etc/sudoers.d/acme
+acme ALL = NOPASSWD: /usr/sbin/service nginx reload

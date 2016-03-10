@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+include /usr/share/dpkg/pkg-info.mk
+
+# Override default hooks path (see _doc/PACKAGING-PATHS.md)
+GO_LDFLAGS += -X github.com/hlandau/acme/hooks.DefaultPath=/etc/acme/hooks
+# Set version information for acmetool --version
+GO_LDFLAGS += -X github.com/hlandau/degoutils/buildinfo.RawBuildInfo=$(shell echo -n "acmetool Debian version $(DEB_VERSION)" | base64)
+
+%:
+	dh $@ --buildsystem=golang --with=golang
+
+override_dh_auto_build:
+	dh_auto_build -O--buildsystem=golang -- -ldflags "$(GO_LDFLAGS)"
+
+override_dh_auto_install:
+	dh_auto_install -O--buildsystem=golang
+	rm -rf debian/acmetool/usr/share/gocode
+	mkdir -p debian/acmetool/usr/share/man/man8
+	debian/acmetool/usr/bin/acmetool --help-man > debian/acmetool/usr/share/man/man8/acmetool.8

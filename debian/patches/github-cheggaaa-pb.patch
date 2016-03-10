@@ -1,0 +1,16 @@
+Description: Import github.com/cheggaaa/pb
+ This patch substitutes the original upstream package for the forked
+ package github.com/hlandauf/pb. The latter contains one additional
+ commit that is not needed for Debian.
+ .
+ https://github.com/hlandauf/pb/commit/0c1cdefd84b3b1937c4e54309f3a817d9c683bab
+Author: Peter Colberg <peter@colberg.org>
+Forwarded: not-needed
+Last-Update: 2016-03-07
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/interaction/stdio.go
++++ b/interaction/stdio.go
+@@ -7 +7 @@
+-	"github.com/hlandauf/pb"
++	"github.com/cheggaaa/pb"

@@ -1,0 +1,53 @@
+Source: acmetool
+Section: web
+Priority: extra
+Maintainer: Debian Go Packaging Team <pkg-go-maintainers@lists.alioth.debian.org>
+Uploaders: Peter Colberg <peter@colberg.org>
+Build-Depends: debhelper (>= 9),
+               dh-golang (>= 1.10~),
+               golang-github-cheggaaa-pb-dev,
+               golang-github-coreos-go-systemd-dev,
+               golang-github-hlandau-degoutils-dev,
+               golang-github-hlandau-xlog-dev,
+               golang-github-jmhodges-clock-dev,
+               golang-github-mitchellh-go-wordwrap-dev,
+               golang-github-peterhellberg-link-dev,
+               golang-github-satori-go.uuid-dev,
+               golang-github-square-go-jose-dev,
+               golang-go,
+               golang-golang-x-crypto-dev,
+               golang-golang-x-net-dev,
+               golang-gopkg-alecthomas-kingpin.v2-dev,
+               golang-gopkg-hlandau-easyconfig.v1-dev,
+               golang-gopkg-hlandau-service.v2-dev,
+               golang-gopkg-hlandau-svcutils.v1-dev,
+               golang-gopkg-tylerb-graceful.v1-dev,
+               golang-yaml.v2-dev
+Standards-Version: 3.9.7
+Homepage: https://hlandau.github.io/acme
+Vcs-Browser: https://anonscm.debian.org/cgit/pkg-go/packages/acmetool.git
+Vcs-Git: https://anonscm.debian.org/git/pkg-go/packages/acmetool.git
+XS-Go-Import-Path: github.com/hlandau/acme
+
+Package: acmetool
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: dialog
+Built-Using: ${misc:Built-Using}
+Description: automatic certificate acquisition tool for Let's Encrypt
+ acmetool is an easy-to-use command line tool for automatically
+ acquiring TLS certificates from ACME (Automated Certificate Management
+ Environment) servers such as Let's Encrypt, designed to flexibly
+ integrate into your webserver setup to enable automatic verification.
+ .
+ acmetool is designed to work like make: you specify what certificates
+ you want, and acmetool obtains certificates as necessary to satisfy
+ those requirements. If the requirements are already satisfied,
+ acmetool doesn't do anything when invoked. Thus, acmetool is
+ ideally suited for use on a cron job; it will do nothing until
+ certificates are near expiry, and then obtain new ones.
+ .
+ acmetool is designed to minimise the use of state and be transparent
+ in the state that it does use. All state, including certificates, is
+ stored in a single directory, by default /var/lib/acme. The schema
+ for this directory is simple, comprehensible and documented.

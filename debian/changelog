@@ -1,0 +1,5 @@
+acmetool (0.0.49-1) UNRELEASED; urgency=medium
+
+  * Initial release (Closes: #817091)
+
+ -- Peter Colberg <peter@colberg.org>  Thu, 10 Mar 2016 08:19:43 -0500

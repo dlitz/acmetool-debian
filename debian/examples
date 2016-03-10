@@ -1,0 +1,3 @@
+_doc/*.example
+_doc/*.hook
+_doc/*.yaml
