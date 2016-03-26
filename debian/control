@@ -1,7 +1,7 @@
 Source: acmetool
 Section: web
 Priority: extra
-Maintainer: Debian Go Packaging Team <pkg-go-maintainers@lists.alioth.debian.org>
+Maintainer: Debian Let's Encrypt <letsencrypt-devel@lists.alioth.debian.org>
 Uploaders: Peter Colberg <peter@colberg.org>
 Build-Depends: debhelper (>= 9),
                dh-golang (>= 1.10~),
@@ -25,8 +25,8 @@ Build-Depends: debhelper (>= 9),
                golang-yaml.v2-dev
 Standards-Version: 3.9.7
 Homepage: https://hlandau.github.io/acme
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-go/packages/acmetool.git
-Vcs-Git: https://anonscm.debian.org/git/pkg-go/packages/acmetool.git
+Vcs-Browser: https://anonscm.debian.org/cgit/letsencrypt/acmetool.git
+Vcs-Git: https://anonscm.debian.org/git/letsencrypt/acmetool.git
 XS-Go-Import-Path: github.com/hlandau/acme
 
 Package: acmetool
