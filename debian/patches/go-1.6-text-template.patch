@@ -1,0 +1,87 @@
+Description: Switch to text/template from Go 1.6
+ This patch adapts the whitespace trimming syntax in the man page template,
+ which is needed since the Debian package of gopkg.in/alecthomas/kingpin.v2
+ has been patched to use the upstream text/template from Go 1.6 to avoid an
+ unneeded dependency on the forked github.com/alecthomas/template.
+ .
+ https://golang.org/doc/go1.6#template
+Author: Peter Colberg <peter@colberg.org>
+Bug-Debian: https://bugs.debian.org/817215#62
+Forwarded: not-needed
+Last-Update: 2016-03-28
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/cmd/acmetool/doc.go
++++ b/cmd/acmetool/doc.go
+@@ -6,33 +6,33 @@ import (
+ 	"gopkg.in/alecthomas/kingpin.v2"
+ )
+ 
+-const manPageTemplate = `{{define "FormatFlags"}}\
+-{{range .Flags}}\
+-{{if not .Hidden}}\
++const manPageTemplate = `{{define "FormatFlags" -}}
++{{range .Flags -}}
++{{if not .Hidden -}}
+ .TP
+-\fB{{if .Short}}-{{.Short|Char}}, {{end}}--{{.Name}}{{if not .IsBoolFlag}}={{.FormatPlaceHolder}}{{end}}\\fR
++\fB{{if .Short}}-{{.Short|Char}}, {{end}}--{{.Name}}{{if not .IsBoolFlag}}={{.FormatPlaceHolder}}{{end}}\fR
+ {{.Help}}
+-{{end}}\
+-{{end}}\
+-{{end}}\
+-{{define "FormatCommand"}}\
+-{{if .FlagSummary}} {{.FlagSummary}}{{end}}\
+-{{range .Args}} {{if not .Required}}[{{end}}<{{.Name}}{{if .Default}}*{{end}}>{{if .Value|IsCumulative}}...{{end}}{{if not .Required}}]{{end}}{{end}}\
+-{{end}}\
+-{{define "FormatCommands"}}\
+-{{range .FlattenedCommands}}\
+-{{if not .Hidden}}\
++{{end -}}
++{{end -}}
++{{end -}}
++{{define "FormatCommand" -}}
++{{if .FlagSummary}} {{.FlagSummary}}{{end -}}
++{{range .Args}} {{if not .Required}}[{{end}}<{{.Name}}{{if .Default}}*{{end}}>{{if .Value|IsCumulative}}...{{end}}{{if not .Required}}]{{end}}{{end -}}
++{{end -}}
++{{define "FormatCommands" -}}
++{{range .FlattenedCommands -}}
++{{if not .Hidden -}}
+ .SS
+-\fB{{.FullCommand}}{{template "FormatCommand" .}}\\fR
++\fB{{.FullCommand}}{{template "FormatCommand" .}}\fR
+ .PP
+ {{.Help}}
+-{{template "FormatFlags" .}}\
+-{{end}}\
+-{{end}}\
+-{{end}}\
+-{{define "FormatUsage"}}\
+-{{template "FormatCommand" .}}{{if .Commands}} <command> [<args> ...]{{end}}\\fR
+-{{end}}\
++{{template "FormatFlags" . -}}
++{{end -}}
++{{end -}}
++{{end -}}
++{{define "FormatUsage" -}}
++{{template "FormatCommand" .}}{{if .Commands}} <command> [<args> ...]{{end}}\fR
++{{end -}}
+ .TH {{.App.Name}} 8 {{.App.Version}} "acmetool"
+ .SH "NAME"
+ {{.App.Name}} - request certificates from ACME servers automatically
+@@ -42,11 +42,11 @@ const manPageTemplate = `{{define "Forma
+ .SH "DESCRIPTION"
+ {{.App.Help}}
+ .SH "OPTIONS"
+-{{template "FormatFlags" .App}}\
+-{{if .App.Commands}}\
++{{template "FormatFlags" .App -}}
++{{if .App.Commands -}}
+ .SH "SUBCOMMANDS"
+-{{template "FormatCommands" .App}}\
+-{{end}}\
++{{template "FormatCommands" .App -}}
++{{end -}}
+ .SH "AUTHOR"
+ © 2015 {{.App.Author}} <hlandau@devever.net>  MIT License
+ .SH "SEE ALSO"
