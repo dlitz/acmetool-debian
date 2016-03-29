@@ -6,6 +6,7 @@ Source: https://github.com/hlandau/acme
 Files: *
 Copyright: 2015-2016 Hugo Landau <hlandau@devever.net>
 License: Expat
+Comment: https://github.com/hlandau/acme#licence
 
 Files: debian/*
 Copyright: 2016 Peter Colberg <peter@colberg.org>
