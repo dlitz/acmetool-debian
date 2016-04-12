@@ -1,4 +1,4 @@
-acmetool (0.0.49-1) UNRELEASED; urgency=medium
+acmetool (0.0.49-1) unstable; urgency=medium
 
   * Initial release (Closes: #817091)
 
