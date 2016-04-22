@@ -1,0 +1,106 @@
+Description: Fix resource consumption vulnerabilities
+ Limit the size of remote responses to 1 MiB.
+ .
+ https://github.com/hlandau/acme/issues/157
+Author: Hugo Landau <hlandau@devever.net>
+Origin: https://github.com/hlandau/acme/commit/ceaba86487c24997e45487ed98149e812e0ecda9
+Forwarded: https://github.com/hlandau/acme/pull/159
+Last-Update: 2016-04-22
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/acmeapi/api.go
++++ b/acmeapi/api.go
+@@ -535,7 +535,7 @@ func (c *Client) loadCertificate(crt *Certificate, res *http.Response, ctx conte
+ 	defer res.Body.Close()
+ 	ct := res.Header.Get("Content-Type")
+ 	if ct == "application/pkix-cert" {
+-		der, err := ioutil.ReadAll(res.Body)
++		der, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 		if err != nil {
+ 			return err
+ 		}
+@@ -584,7 +584,7 @@ func (c *Client) loadExtraCertificates(crt *Certificate, res *http.Response, ctx
+ 			return fmt.Errorf("unexpected certificate type: %v", ct)
+ 		}
+ 
+-		der, err := ioutil.ReadAll(res.Body)
++		der, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 		if err != nil {
+ 			return err
+ 		}
+--- a/acmeapi/ocsp.go
++++ b/acmeapi/ocsp.go
+@@ -6,6 +6,7 @@ import (
+ 	"fmt"
+ 	"golang.org/x/crypto/ocsp"
+ 	"golang.org/x/net/context"
++	"io"
+ 	"io/ioutil"
+ 	"net/http"
+ )
+@@ -49,7 +50,7 @@ func (c *Client) CheckOCSP(crt, issuer *x509.Certificate, ctx context.Context) (
+ 		return nil, fmt.Errorf("response to OCSP request had unexpected content type")
+ 	}
+ 
+-	resb, err := ioutil.ReadAll(res.Body)
++	resb, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 	if err != nil {
+ 		return nil, err
+ 	}
+--- a/acmeapi/util-errors.go
++++ b/acmeapi/util-errors.go
+@@ -2,6 +2,7 @@ package acmeapi
+ 
+ import (
+ 	"fmt"
++	"io"
+ 	"io/ioutil"
+ 	"net/http"
+ )
+@@ -40,7 +40,7 @@ func newHTTPError(res *http.Response) error {
+ 	}
+ 	if res.Header.Get("Content-Type") == "application/problem+json" {
+ 		defer res.Body.Close()
+-		b, err := ioutil.ReadAll(res.Body)
++		b, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 		if err == nil {
+ 			he.ProblemBody = string(b)
+ 		}
+--- a/redirector/redirector_test.go
++++ b/redirector/redirector_test.go
+@@ -1,6 +1,7 @@
+ package redirector
+ 
+ import (
++	"io"
+ 	"io/ioutil"
+ 	"net/http"
+ 	"os"
+@@ -63,7 +64,7 @@ func TestRedirector(t *testing.T) {
+ 	}
+ 
+ 	defer res.Body.Close()
+-	b, err := ioutil.ReadAll(res.Body)
++	b, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+--- a/responder/http.go
++++ b/responder/http.go
+@@ -8,6 +8,7 @@ import (
+ 	"github.com/hlandau/acme/acmeapi/acmeutils"
+ 	deos "github.com/hlandau/degoutils/os"
+ 	"gopkg.in/tylerb/graceful.v1"
++	"io"
+ 	"io/ioutil"
+ 	"net"
+ 	"net/http"
+@@ -124,7 +125,7 @@ func (s *httpResponder) selfTest() error {
+ 		return fmt.Errorf("non-200 status code when doing self-test")
+ 	}
+ 
+-	b, err := ioutil.ReadAll(res.Body)
++	b, err := ioutil.ReadAll(io.LimitReader(res.Body, 1*1024*1024))
+ 	if err != nil {
+ 		return err
+ 	}
