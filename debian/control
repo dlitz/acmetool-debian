@@ -25,7 +25,7 @@ Build-Depends: debhelper (>= 9),
                golang-yaml.v2-dev
 Standards-Version: 3.9.8
 Homepage: https://hlandau.github.io/acme
-Vcs-Browser: https://anonscm.debian.org/cgit/letsencrypt/acmetool.git
+Vcs-Browser: https://anonscm.debian.org/git/letsencrypt/acmetool.git
 Vcs-Git: https://anonscm.debian.org/git/letsencrypt/acmetool.git
 XS-Go-Import-Path: github.com/hlandau/acme
 
