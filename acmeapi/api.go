@@ -29,7 +29,7 @@ import (
 	"crypto"
 	"crypto/ecdsa"
 	"crypto/rsa"
-	"github.com/square/go-jose"
+	"gopkg.in/square/go-jose.v1"
 
 	denet "github.com/hlandau/degoutils/net"
 	"github.com/peterhellberg/link"
@@ -535,7 +535,7 @@ func (c *Client) loadCertificate(crt *Certificate, res *http.Response, ctx conte
 	defer res.Body.Close()
 	ct := res.Header.Get("Content-Type")
 	if ct == "application/pkix-cert" {
-		der, err := ioutil.ReadAll(res.Body)
+		der, err := ioutil.ReadAll(denet.LimitReader(res.Body, 1*1024*1024))
 		if err != nil {
 			return err
 		}
@@ -584,7 +584,7 @@ func (c *Client) loadExtraCertificates(crt *Certificate, res *http.Response, ctx
 			return fmt.Errorf("unexpected certificate type: %v", ct)
 		}
 
-		der, err := ioutil.ReadAll(res.Body)
+		der, err := ioutil.ReadAll(denet.LimitReader(res.Body, 1*1024*1024))
 		if err != nil {
 			return err
 		}

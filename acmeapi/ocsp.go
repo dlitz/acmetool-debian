@@ -4,6 +4,7 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"fmt"
+	denet "github.com/hlandau/degoutils/net"
 	"golang.org/x/crypto/ocsp"
 	"golang.org/x/net/context"
 	"io/ioutil"
@@ -49,7 +50,8 @@ func (c *Client) CheckOCSP(crt, issuer *x509.Certificate, ctx context.Context) (
 		return nil, fmt.Errorf("response to OCSP request had unexpected content type")
 	}
 
-	resb, err := ioutil.ReadAll(res.Body)
+	// Read response, limiting response to 1MiB.
+	resb, err := ioutil.ReadAll(denet.LimitReader(res.Body, 1*1024*1024))
 	if err != nil {
 		return nil, err
 	}
