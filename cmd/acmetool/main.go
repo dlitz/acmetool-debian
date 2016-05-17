@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"syscall"
 
 	"github.com/hlandau/acme/acmeapi"
 	"github.com/hlandau/acme/acmeapi/acmeutils"
@@ -18,10 +19,10 @@ import (
 	"github.com/hlandau/acme/storageops"
 	"github.com/hlandau/degoutils/xlogconfig"
 	"github.com/hlandau/xlog"
-	"github.com/square/go-jose"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"gopkg.in/hlandau/easyconfig.v1/adaptflag"
 	"gopkg.in/hlandau/service.v2"
+	"gopkg.in/square/go-jose.v1"
 	"gopkg.in/yaml.v2"
 )
 
@@ -56,7 +57,7 @@ var (
 
 	wantCmd       = kingpin.Command("want", "Add a target with one or more hostnames")
 	wantReconcile = wantCmd.Flag("reconcile", "Specify --no-reconcile to skip reconcile after adding target").Default("1").Bool()
-	wantArg       = wantCmd.Arg("hostname", "hostnames for which a certicate should be obtained").Required().Strings()
+	wantArg       = wantCmd.Arg("hostname", "hostnames for which a certificate should be obtained").Required().Strings()
 
 	unwantCmd = kingpin.Command("unwant", "Modify targets to remove any mentions of the given hostnames")
 	unwantArg = unwantCmd.Arg("hostname", "hostnames which should be removed from all target files").Required().Strings()
@@ -100,6 +101,8 @@ const reconcileHelp = `Reconcile ACME state, idempotently requesting and renewin
 This is the default command.`
 
 func main() {
+	syscall.Umask(0) // make sure webroot files can be world-readable
+
 	adaptflag.Adapt()
 	cmd := kingpin.Parse()
 	hooks.DefaultPath = *hooksFlag

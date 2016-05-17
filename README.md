@@ -211,7 +211,7 @@ will use those ports. Either port being available is sufficient. This is only
 really useful for development purposes.
 
 **Hook:** You can write custom shell scripts (or binary executables) which
-acmetool invokes to provison challenge files at the desired location. For
+acmetool invokes to provision challenge files at the desired location. For
 example, you could rsync challenge files to a directory on a remote server. [More information.](https://hlandau.github.io/acme/userguide#challenge-hooks)
 
 ## Renewal
@@ -274,7 +274,7 @@ short lifetime of certificates issued by Let's Encrypt.
 <tr><td>Single-file binary</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>Quickstart wizard</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr>
 <tr><td>Modifies webserver config</td><td>No</td><td>By default</td><td>No</td><td>No</td></tr>
-<tr><td>Non-root support</td><td><a href="_doc/NOROOT.md">Optional</a></td><td>Optional</td><td>Optional</td><td>—</td></tr>
+<tr><td>Non-root support</td><td><a href="https://hlandau.github.io/acme/userguide#annex-root-configured-non-root-operation">Optional</a></td><td>Optional</td><td>Optional</td><td>—</td></tr>
 <tr><td>Supports Apache</td><td>Yes</td><td>Yes</td><td>—</td><td>—</td></tr>
 <tr><td>Supports nginx</td><td>Yes</td><td>Experimental</td><td>—</td><td>—</td></tr>
 <tr><td>Supports HAProxy</td><td>Yes</td><td>No</td><td>—</td><td>—</td></tr>
@@ -284,7 +284,7 @@ short lifetime of certificates issued by Let's Encrypt.
 <tr><td>Authorization via port 80 redirector</td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
 <tr><td>Authorization via proxy</td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
 <tr><td>Authorization via listener§</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td></tr>
-<tr><td>Authorization via DNS</td><td><a href="_doc/dns.hook">Hook only</a></td><td>No</td><td>Yes</td><td>No</td></tr>
+<tr><td>Authorization via DNS</td><td><a href="https://hlandau.github.io/acme/userguide#dns-hook-scripts">Hook only</a></td><td>No</td><td>Yes</td><td>No</td></tr>
 <tr><td>Authorization via custom hook</td><td><a href="https://hlandau.github.io/acme/userguide#challenge-hooks">Yes</a></td><td>No</td><td>No</td><td>No</td></tr>
 <tr><td>Import state from official client</td><td>Yes</td><td>—</td><td>—</td><td>—</td></tr>
 <tr><td>Windows (basic) support</td><td>No</td><td>No</td><td>Yes</td><td>—</td></tr>
@@ -325,3 +325,7 @@ IRC: [#acmetool](irc://chat.freenode.net/#acmetool) on [Freenode](http://freenod
 
     © 2015—2016 Hugo Landau <hlandau@devever.net>    MIT License
 
+[Licenced under the licence with SHA256 hash
+`fd80a26fbb3f644af1fa994134446702932968519797227e07a1368dea80f0bc`, a copy of
+which can be found
+here.](https://raw.githubusercontent.com/hlandau/acme/master/_doc/COPYING.MIT)
