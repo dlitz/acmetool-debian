@@ -18,7 +18,6 @@ override_dh_auto_test:
 	dh_auto_test -O--buildsystem=golang -- -run '^Test([^O]|O[^C]|OC[^S]|OCS[^P])'
 
 override_dh_auto_install:
-	dh_auto_install -O--buildsystem=golang
-	rm -rf debian/acmetool/usr/share/gocode
+	dh_auto_install -O--buildsystem=golang -- --no-source
 	mkdir -p debian/acmetool/usr/share/man/man8
 	debian/acmetool/usr/bin/acmetool --help-man > debian/acmetool/usr/share/man/man8/acmetool.8
