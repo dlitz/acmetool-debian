@@ -5,3 +5,6 @@
 # binary, which is confusing lintian into thinking we've got an embedded copy of
 # libyaml itself.
 acmetool binary: embedded-library usr/bin/acmetool: libyaml
+
+acmetool: spelling-error-in-binary usr/bin/acmetool writeN written
+acmetool: spelling-error-in-readme-debian acme acme (duplicate word) acme
