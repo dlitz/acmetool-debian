@@ -1,3 +1,17 @@
+acmetool (0.0.51-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop patches applied upstream
+  * Build depend on
+    - golang-gopkg-cheggaaa-pb.v1-dev
+    - golang-gopkg-square-go-jose.v1-dev
+    - golang-github-hlandau-degoutils-dev (>= 0.0~git20160421.0.389a847)
+  * Build depend on dh-golang (>= 1.17~) and install with --no-source
+  * Do not compress example scripts
+  * Add lintian overrides for spelling error false positives
+
+ -- Peter Colberg <peter@colberg.org>  Wed, 18 May 2016 07:48:14 -0400
+
 acmetool (0.0.49-1) unstable; urgency=medium
 
   * Initial release (Closes: #817091)
