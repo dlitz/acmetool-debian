@@ -21,3 +21,6 @@ override_dh_auto_install:
 	dh_auto_install -O--buildsystem=golang -- --no-source
 	mkdir -p debian/acmetool/usr/share/man/man8
 	debian/acmetool/usr/bin/acmetool --help-man > debian/acmetool/usr/share/man/man8/acmetool.8
+
+override_dh_compress:
+	dh_compress --exclude=examples
