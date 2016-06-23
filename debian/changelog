@@ -1,3 +1,9 @@
+acmetool (0.0.54-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Peter Colberg <peter@colberg.org>  Thu, 23 Jun 2016 08:33:22 -0400
+
 acmetool (0.0.51-1) unstable; urgency=medium
 
   * New upstream release
