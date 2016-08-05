@@ -475,12 +475,18 @@ func (r *reconcile) obtainAuthorization(name string, a *storage.Account, targetF
 		}
 	}
 
+	httpSelfTest := true
+	if trc.HTTPSelfTest != nil {
+		httpSelfTest = *trc.HTTPSelfTest
+	}
+
 	ccfg := responder.ChallengeConfig{
-		WebPaths:      trc.WebrootPaths,
-		HTTPPorts:     trc.HTTPPorts,
-		PriorKeyFunc:  r.getPriorKey,
-		StartHookFunc: startHookFunc,
-		StopHookFunc:  stopHookFunc,
+		WebPaths:       trc.WebrootPaths,
+		HTTPPorts:      trc.HTTPPorts,
+		HTTPNoSelfTest: !httpSelfTest,
+		PriorKeyFunc:   r.getPriorKey,
+		StartHookFunc:  startHookFunc,
+		StopHookFunc:   stopHookFunc,
 	}
 
 	az, err := solver.Authorize(cl, name, ccfg, context.TODO())
@@ -717,7 +723,7 @@ func (r *reconcile) createCSR(t *storage.Target) ([]byte, error) {
 	}
 
 	if t.Request.OCSPMustStaple {
-		csr.Extensions = append(csr.Extensions, pkix.Extension{
+		csr.ExtraExtensions = append(csr.ExtraExtensions, pkix.Extension{
 			Id:    oidTLSFeature,
 			Value: mustStapleFeatureValue,
 		})

@@ -17,7 +17,7 @@ import (
 	"github.com/hlandau/acme/responder"
 	"github.com/hlandau/acme/storage"
 	"github.com/hlandau/acme/storageops"
-	"github.com/hlandau/degoutils/xlogconfig"
+	"github.com/hlandau/dexlogconfig"
 	"github.com/hlandau/xlog"
 	"gopkg.in/alecthomas/kingpin.v2"
 	"gopkg.in/hlandau/easyconfig.v1/adaptflag"
@@ -76,6 +76,10 @@ var (
 	importJWKURLArg     = importJWKAccountCmd.Arg("provider-url", "Provider URL (e.g. https://acme-v01.api.letsencrypt.org/directory)").Required().String()
 	importJWKPathArg    = importJWKAccountCmd.Arg("private-key-file", "Path to private_key.json").Required().ExistingFile()
 
+	importPEMAccountCmd = kingpin.Command("import-pem-account", "Import a PEM account key")
+	importPEMURLArg     = importPEMAccountCmd.Arg("provider-url", "Provider URL (e.g. https://acme-v01.api.letsencrypt.org/directory)").Required().String()
+	importPEMPathArg    = importPEMAccountCmd.Arg("private-key-file", "Path to private key PEM file").Required().ExistingFile()
+
 	importKeyCmd = kingpin.Command("import-key", "Import a certificate private key")
 	importKeyArg = importKeyCmd.Arg("private-key-file", "Path to PEM-encoded private key").Required().ExistingFile()
 
@@ -114,7 +118,7 @@ func main() {
 
 	hooks.DefaultPath = *hooksFlag
 	acmeapi.UserAgent = "acmetool"
-	xlogconfig.Init()
+	dexlogconfig.Init()
 
 	if *batchFlag {
 		interaction.NonInteractive = true
@@ -162,6 +166,8 @@ func main() {
 		cmdImportKey()
 	case "import-jwk-account":
 		cmdImportJWKAccount()
+	case "import-pem-account":
+		cmdImportPEMAccount()
 	case "import-le":
 		cmdImportLE()
 		cmdReconcile()
@@ -186,6 +192,24 @@ func cmdImportJWKAccount() {
 	log.Fatale(err, "cannot unmarshal key")
 
 	_, err = s.ImportAccount(*importJWKURLArg, k.Key)
+	log.Fatale(err, "cannot import account key")
+}
+
+func cmdImportPEMAccount() {
+	s, err := storage.NewFDB(*stateFlag)
+	log.Fatale(err, "storage")
+
+	f, err := os.Open(*importPEMPathArg)
+	log.Fatale(err, "cannot open private key file")
+	defer f.Close()
+
+	b, err := ioutil.ReadAll(f)
+	log.Fatale(err, "cannot read file")
+
+	pk, err := acmeutils.LoadPrivateKey(b)
+	log.Fatale(err, "cannot parse private key")
+
+	_, err = s.ImportAccount(*importPEMURLArg, pk)
 	log.Fatale(err, "cannot import account key")
 }
 

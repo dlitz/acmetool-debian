@@ -233,6 +233,7 @@ HAPROXY_UMASK="0077"
 }
 
 # Create coalesced files and a haproxy repository.
+umask 0022
 mkdir -p "$ACME_STATE_DIR/haproxy"
 umask $HAPROXY_UMASK
 while read name; do
@@ -247,7 +248,7 @@ while read name; do
     cat "$certdir/privkey" "$certdir/fullchain" > "$certdir/haproxy"
   fi
 
-  [ -h "$ACME_STATE_DIR/haproxy/$name" ] || ln -s "../live/$name/haproxy" "$ACME_STATE_DIR/haproxy/$name"
+  [ -h "$ACME_STATE_DIR/haproxy/$name" ] || ln -fs "../live/$name/haproxy" "$ACME_STATE_DIR/haproxy/$name"
 done`
 
 func installHook(name, value string) {
