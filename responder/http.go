@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/hlandau/acme/acmeapi/acmeutils"
-	denet "github.com/hlandau/degoutils/net"
-	deos "github.com/hlandau/degoutils/os"
+	denet "github.com/hlandau/goutils/net"
+	deos "github.com/hlandau/goutils/os"
 	"gopkg.in/tylerb/graceful.v1"
 	"io/ioutil"
 	"net"
@@ -90,12 +90,14 @@ func (s *httpResponder) Start() error {
 		return err
 	}
 
-	log.Debug("http-01 self test")
-	err = s.selfTest()
-	if err != nil {
-		log.Infoe(err, "http-01 self test failed")
-		s.Stop()
-		return err
+	if !s.rcfg.ChallengeConfig.HTTPNoSelfTest {
+		log.Debug("http-01 self test")
+		err = s.selfTest()
+		if err != nil {
+			log.Infoe(err, "http-01 self test failed")
+			s.Stop()
+			return err
+		}
 	}
 
 	log.Debug("http-01 started")
