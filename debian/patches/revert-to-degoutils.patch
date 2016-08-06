@@ -1,0 +1,119 @@
+Description: Revert to degoutils due to missing upstream licenses
+ This patch reverts the split of the package degoutils into the packages
+ goutils, buildinfo, and dexlogconfig, which do not contain any mention
+ of their license in the source and are not distributable within Debian.
+ .
+ https://github.com/hlandau/acme/commit/8a25c5288047507147b0c56695357d3569055841
+ https://github.com/hlandau/acme/commit/7307a5d7cd8bd308acd0f3e3c0c36483023e4332
+ https://github.com/hlandau/goutils/issues/1
+ https://github.com/hlandau/buildinfo/issues/1
+ https://github.com/hlandau/dexlogconfig/issues/1
+Author: Peter Colberg <peter@colberg.org>
+Bug-Debian: https://bugs.debian.org/833494#12
+Forwarded: not-needed
+Last-Update: 2016-08-06
+--- a/.travis/crosscompile
++++ b/.travis/crosscompile
+@@ -18 +18 @@
+-BUILDINFO="$($GOPATH/src/github.com/hlandau/buildinfo/gen $BINARIES)"
++BUILDINFO="$($GOPATH/src/github.com/hlandau/degoutils/buildinfo/gen $BINARIES)"
+--- a/Makefile
++++ b/Makefile
+@@ -42 +42 @@
+-	BUILDINFO_FLAG=-ldflags "$$($$GOPATH/src/github.com/hlandau/buildinfo/gen $(1))"
++	BUILDINFO_FLAG=-ldflags "$$($$GOPATH/src/github.com/hlandau/degoutils/buildinfo/gen $(1))"
+--- a/_doc/PACKAGING-PATHS.md
++++ b/_doc/PACKAGING-PATHS.md
+@@ -21 +21 @@
+-    $($GOPATH/src/github.com/hlandau/buildinfo/gen github.com/hlandau/acme/cmd/acmetool)
++    $($GOPATH/src/github.com/hlandau/degoutils/buildinfo/gen github.com/hlandau/acme/cmd/acmetool)
+--- a/acmeapi/acmeendpoints/url_test.go
++++ b/acmeapi/acmeendpoints/url_test.go
+@@ -10 +10 @@
+-	"github.com/hlandau/goutils/test"
++	"github.com/hlandau/degoutils/test"
+--- a/acmeapi/api.go
++++ b/acmeapi/api.go
+@@ -34 +34 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
+--- a/acmeapi/api_test.go
++++ b/acmeapi/api_test.go
+@@ -9 +9 @@
+-	"github.com/hlandau/goutils/test"
++	"github.com/hlandau/degoutils/test"
+--- a/acmeapi/ocsp.go
++++ b/acmeapi/ocsp.go
+@@ -7 +7 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
+--- a/acmeapi/types.go
++++ b/acmeapi/types.go
+@@ -6 +6 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
+--- a/acmeapi/util-errors.go
++++ b/acmeapi/util-errors.go
+@@ -5 +5 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
+--- a/acmeapi/util-retry.go
++++ b/acmeapi/util-retry.go
+@@ -4 +4 @@
+-	"github.com/hlandau/goutils/clock"
++	"github.com/hlandau/degoutils/clock"
+--- a/acmeapi/util-retry_test.go
++++ b/acmeapi/util-retry_test.go
+@@ -4 +4 @@
+-	"github.com/hlandau/goutils/clock"
++	"github.com/hlandau/degoutils/clock"
+--- a/cmd/acmetool/main.go
++++ b/cmd/acmetool/main.go
+@@ -20 +20 @@
+-	"github.com/hlandau/dexlogconfig"
++	"github.com/hlandau/degoutils/xlogconfig"
+@@ -121 +121 @@
+-	dexlogconfig.Init()
++	xlogconfig.Init()
+--- a/fdb/fdb.go
++++ b/fdb/fdb.go
+@@ -7 +7 @@
+-	deos "github.com/hlandau/goutils/os"
++	deos "github.com/hlandau/degoutils/os"
+--- a/hooks/hooks.go
++++ b/hooks/hooks.go
+@@ -7 +7 @@
+-	deos "github.com/hlandau/goutils/os"
++	deos "github.com/hlandau/degoutils/os"
+--- a/hooks/os.go
++++ b/hooks/os.go
+@@ -4 +4 @@
+-	deos "github.com/hlandau/goutils/os"
++	deos "github.com/hlandau/degoutils/os"
+--- a/interaction/stdio.go
++++ b/interaction/stdio.go
+@@ -6 +6 @@
+-	"github.com/hlandau/goutils/text"
++	"github.com/hlandau/degoutils/text"
+--- a/redirector/redirector.go
++++ b/redirector/redirector.go
+@@ -8 +8 @@
+-	deos "github.com/hlandau/goutils/os"
++	deos "github.com/hlandau/degoutils/os"
+--- a/redirector/redirector_test.go
++++ b/redirector/redirector_test.go
+@@ -4 +4 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
+--- a/responder/http.go
++++ b/responder/http.go
+@@ -9,2 +9,2 @@
+-	denet "github.com/hlandau/goutils/net"
+-	deos "github.com/hlandau/goutils/os"
++	denet "github.com/hlandau/degoutils/net"
++	deos "github.com/hlandau/degoutils/os"
+--- a/solver/respond.go
++++ b/solver/respond.go
+@@ -9 +9 @@
+-	denet "github.com/hlandau/goutils/net"
++	denet "github.com/hlandau/degoutils/net"
