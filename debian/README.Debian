@@ -92,3 +92,18 @@ you may configure sudo to permit that user to reload your web server:
 
 # /etc/sudoers.d/acme
 acme ALL = NOPASSWD: /usr/sbin/service nginx reload
+
+
+Response file
+-------------
+
+When creating a new registration or updating an existing registration
+after a change of the Let’s Encrypt Subscriber Agreement, acmetool will
+ask you for approval. For unattended renewals this may be automated by
+creating a response file with your email address (optional) and one or
+multiple URLs pointing to the current and future subscriber agreements.
+
+# /var/lib/acme/conf/responses
+"acme-enter-email": "user@example.com"
+"acme-agreement:https://letsencrypt.org/documents/LE-SA-v1.0.1-July-27-2015.pdf": true
+"acme-agreement:https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf": true
