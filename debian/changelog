@@ -1,3 +1,11 @@
+acmetool (0.0.56-1) unstable; urgency=high
+
+  * New upstream release (Closes: #833494)
+  * Revert to degoutils due to missing upstream licenses
+  * Document response file for unattended subscriber agreement in README.Debian
+
+ -- Peter Colberg <peter@colberg.org>  Sat, 06 Aug 2016 08:54:28 -0400
+
 acmetool (0.0.54-1) unstable; urgency=medium
 
   * New upstream release
