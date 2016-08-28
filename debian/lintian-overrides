@@ -1,10 +1,2 @@
-# See https://github.com/go-yaml/yaml/blob/v2/LICENSE.libyaml
-#
-# Essentially, "gopkg.in/yaml.v2" contains a faithful port of libyaml to Go,
-# down to the method names.  This causes the same symbols/strings in the final
-# binary, which is confusing lintian into thinking we've got an embedded copy of
-# libyaml itself.
-acmetool binary: embedded-library usr/bin/acmetool: libyaml
-
 acmetool: spelling-error-in-binary usr/bin/acmetool writeN written
 acmetool: spelling-error-in-readme-debian acme acme (duplicate word) acme
