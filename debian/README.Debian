@@ -93,6 +93,12 @@ you may configure sudo to permit that user to reload your web server:
 # /etc/sudoers.d/acme
 acme ALL = NOPASSWD: /usr/sbin/service nginx reload
 
+This hook reloads nginx whenever /var/lib/acme/live is updated:
+
+#!/bin/sh
+[ "$1" = "live-updated" ] || exit 42 # unsupported event
+sudo /usr/sbin/service nginx reload
+
 
 Response file
 -------------
