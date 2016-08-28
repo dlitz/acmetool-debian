@@ -1,3 +1,10 @@
+acmetool (0.0.56-2) unstable; urgency=medium
+
+  * Add example for live-updated hook to README.Debian
+  * Remove lintian override for libyaml, no longer needed with Go 1.7
+
+ -- Peter Colberg <peter@colberg.org>  Sun, 28 Aug 2016 08:34:17 -0400
+
 acmetool (0.0.56-1) unstable; urgency=high
 
   * New upstream release (Closes: #833494)
