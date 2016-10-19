@@ -1,3 +1,13 @@
+acmetool (0.0.58-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop patch and build dependency on golang-github-hlandau-degoutils-dev
+  * Build depend on golang-github-hlandau-goutils-dev
+  * Build depend on golang-github-hlandau-dexlogconfig-dev
+  * Add copy of upstream license text
+
+ -- Peter Colberg <peter@colberg.org>  Wed, 19 Oct 2016 08:02:06 -0400
+
 acmetool (0.0.56-2) unstable; urgency=medium
 
   * Add example for live-updated hook to README.Debian
