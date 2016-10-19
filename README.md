@@ -56,7 +56,7 @@ certificates are available to meet those names. Certificates which will expire
 soon are renewed. acmetool is thus idempotent and minimises the use of state.
 
 acmetool can optionally be used [without running it as
-root.](https://github.com/hlandau/acme/blob/master/_doc/NOROOT.md) If you have
+root.](https://hlandau.github.io/acme/userguide#annex-root-configured-non-root-operation) If you have
 existing certificates issued using the official client, acmetool can import
 those certificates, keys and account keys (`acmetool import-le`).
 
@@ -110,6 +110,12 @@ $ sudo dnf install acmetool
 Otherwise use the `.repo` files on the [repository
 page](https://copr.fedorainfracloud.org/coprs/hlandau/acmetool/) and use `yum`,
 or download RPMs and use `rpm` directly.
+
+**Void Linux users:** `acmetool` is in the repositories:
+
+```bash
+$ sudo xbps-install acmetool
+```
 
 **Arch Linux users:** [An AUR PKGBUILD for building from source is available.](https://aur.archlinux.org/packages/acmetool-git/)
 
@@ -328,4 +334,4 @@ IRC: [#acmetool](irc://chat.freenode.net/#acmetool) on [Freenode](http://freenod
 [Licenced under the licence with SHA256 hash
 `fd80a26fbb3f644af1fa994134446702932968519797227e07a1368dea80f0bc`, a copy of
 which can be found
-here.](https://raw.githubusercontent.com/hlandau/acme/master/_doc/COPYING.MIT)
+here.](https://raw.githubusercontent.com/hlandau/rilts/master/licences/COPYING.MIT)
