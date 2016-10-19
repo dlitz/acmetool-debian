@@ -6,6 +6,7 @@ Uploaders: Peter Colberg <peter@colberg.org>
 Build-Depends: debhelper (>= 9),
                dh-golang (>= 1.17~),
                golang-github-coreos-go-systemd-dev,
+               golang-github-hlandau-goutils-dev,
                golang-github-hlandau-xlog-dev,
                golang-github-jmhodges-clock-dev,
                golang-github-mitchellh-go-wordwrap-dev,
