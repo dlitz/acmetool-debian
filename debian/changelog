@@ -1,3 +1,9 @@
+acmetool (0.0.58-1~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports.
+
+ -- Peter Colberg <peter@colberg.org>  Wed, 02 Nov 2016 22:50:56 -0400
+
 acmetool (0.0.58-1) unstable; urgency=medium
 
   * New upstream release
