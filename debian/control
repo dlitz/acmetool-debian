@@ -23,7 +23,8 @@ Build-Depends: debhelper (>= 10),
                golang-gopkg-hlandau-svcutils.v1-dev,
                golang-gopkg-square-go-jose.v1-dev,
                golang-gopkg-tylerb-graceful.v1-dev,
-               golang-gopkg-yaml.v2-dev | golang-yaml.v2-dev
+               golang-gopkg-yaml.v2-dev | golang-yaml.v2-dev,
+               libcap-dev [linux-any]
 Standards-Version: 3.9.8
 Homepage: https://hlandau.github.io/acme
 Vcs-Browser: https://anonscm.debian.org/git/letsencrypt/acmetool.git
