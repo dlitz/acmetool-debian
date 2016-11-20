@@ -1,3 +1,11 @@
+acmetool (0.0.58-2) unstable; urgency=medium
+
+  * Bump debhelper compat level to 10
+  * Build-depend on golang-any instead of golang-go
+  * Build-depend on golang-gopkg-yaml.v2-dev or golang-yaml.v2-dev
+
+ -- Peter Colberg <peter@colberg.org>  Sat, 19 Nov 2016 23:52:06 -0500
+
 acmetool (0.0.58-1) unstable; urgency=medium
 
   * New upstream release
