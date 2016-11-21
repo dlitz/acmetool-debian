@@ -1,3 +1,9 @@
+acmetool (0.0.58-4) unstable; urgency=medium
+
+  * Skip parseperm test if cgo is disabled
+
+ -- Peter Colberg <peter@colberg.org>  Sun, 20 Nov 2016 22:40:27 -0500
+
 acmetool (0.0.58-3) unstable; urgency=medium
 
   * Build-depend on libcap-dev for linux-any.
