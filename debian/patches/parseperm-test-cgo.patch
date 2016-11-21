@@ -1,0 +1,14 @@
+Description: Skip parseperm test if cgo is disabled
+Author: Peter Colberg <peter@colberg.org>
+Bug: https://github.com/hlandau/acme/issues/219
+Last-Update: 2016-11-20
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/fdb/parseperm_test.go
++++ b/fdb/parseperm_test.go
+@@ -1,3 +1,5 @@
++// +build cgo
++
+ package fdb
+ 
+ import (

@@ -1,2 +1,3 @@
 go-1.6-text-template.patch
 license.patch
+parseperm-test-cgo.patch
