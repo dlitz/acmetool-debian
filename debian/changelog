@@ -1,3 +1,9 @@
+acmetool (0.0.58-4~bpo8+1) jessie-backports; urgency=medium
+
+  * Rebuild for jessie-backports.
+
+ -- Peter Colberg <peter@colberg.org>  Fri, 25 Nov 2016 23:23:05 -0500
+
 acmetool (0.0.58-4) unstable; urgency=medium
 
   * Skip parseperm test if cgo is disabled
