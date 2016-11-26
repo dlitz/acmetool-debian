@@ -3,8 +3,9 @@ Section: web
 Priority: extra
 Maintainer: Debian Let's Encrypt <letsencrypt-devel@lists.alioth.debian.org>
 Uploaders: Peter Colberg <peter@colberg.org>
-Build-Depends: debhelper (>= 9),
+Build-Depends: debhelper (>= 10),
                dh-golang (>= 1.17~),
+               golang-any,
                golang-github-coreos-go-systemd-dev,
                golang-github-hlandau-dexlogconfig-dev,
                golang-github-hlandau-goutils-dev,
@@ -13,7 +14,6 @@ Build-Depends: debhelper (>= 9),
                golang-github-mitchellh-go-wordwrap-dev,
                golang-github-peterhellberg-link-dev,
                golang-github-satori-go.uuid-dev,
-               golang-go,
                golang-golang-x-crypto-dev,
                golang-golang-x-net-dev,
                golang-gopkg-alecthomas-kingpin.v2-dev,
@@ -23,7 +23,8 @@ Build-Depends: debhelper (>= 9),
                golang-gopkg-hlandau-svcutils.v1-dev,
                golang-gopkg-square-go-jose.v1-dev,
                golang-gopkg-tylerb-graceful.v1-dev,
-               golang-yaml.v2-dev
+               golang-gopkg-yaml.v2-dev | golang-yaml.v2-dev,
+               libcap-dev [linux-any]
 Standards-Version: 3.9.8
 Homepage: https://hlandau.github.io/acme
 Vcs-Browser: https://anonscm.debian.org/git/letsencrypt/acmetool.git
