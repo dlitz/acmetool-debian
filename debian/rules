@@ -1,11 +1,11 @@
 #!/usr/bin/make -f
 
-include /usr/share/dpkg/pkg-info.mk
+include /usr/share/dpkg/default.mk
 
 # Override default hooks path (see _doc/PACKAGING-PATHS.md)
 GO_LDFLAGS += -X github.com/hlandau/acme/hooks.DefaultPath=/etc/acme/hooks
 # Set version information for acmetool --version
-GO_LDFLAGS += -X github.com/hlandau/buildinfo.RawBuildInfo=$(shell echo -n "acmetool Debian version $(DEB_VERSION)" | base64)
+GO_LDFLAGS += -X github.com/hlandau/buildinfo.RawBuildInfo=$(shell echo -n 'acmetool $(DEB_VENDOR) version $(DEB_VERSION)' | base64)
 
 %:
 	dh $@ --buildsystem=golang --with=golang,apache2
