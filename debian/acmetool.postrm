@@ -3,7 +3,7 @@
 set -e
 
 if [ "$1" = "purge" ]; then
-	rm -rf /var/lib/acme
+	rm -rf /var/lib/acme /var/log/acmetool
 fi
 
 #DEBHELPER#
