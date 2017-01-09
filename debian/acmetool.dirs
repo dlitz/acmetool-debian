@@ -1,2 +1,3 @@
+etc/acme/hooks
 var/lib/acme
 var/log/acmetool
