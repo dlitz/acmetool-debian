@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ "$1" = "configure" ]; then
+	if [ -d /run/systemd/system ]; then
+		systemd-tmpfiles --create --prefix=/var/run/acme || true
+	fi
+fi
+
+#DEBHELPER#
