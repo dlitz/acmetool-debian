@@ -4,6 +4,7 @@ Priority: extra
 Maintainer: Debian Let's Encrypt <letsencrypt-devel@lists.alioth.debian.org>
 Uploaders: Peter Colberg <peter@colberg.org>
 Build-Depends: debhelper (>= 10.2.3~),
+               dh-apache2,
                dh-golang (>= 1.17~),
                golang-any,
                golang-github-coreos-go-systemd-dev,

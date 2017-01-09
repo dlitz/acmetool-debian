@@ -8,7 +8,7 @@ GO_LDFLAGS += -X github.com/hlandau/acme/hooks.DefaultPath=/etc/acme/hooks
 GO_LDFLAGS += -X github.com/hlandau/buildinfo.RawBuildInfo=$(shell echo -n "acmetool Debian version $(DEB_VERSION)" | base64)
 
 %:
-	dh $@ --buildsystem=golang --with=golang
+	dh $@ --buildsystem=golang --with=golang,apache2
 
 override_dh_auto_build:
 	dh_auto_build -O--buildsystem=golang -- -ldflags "$(GO_LDFLAGS)"
