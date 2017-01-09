@@ -1,3 +1,20 @@
+acmetool (0.0.58-5) unstable; urgency=medium
+
+  * Rewrite README.Debian
+  * Add optional systemd service and timer
+  * Create and purge directory /var/lib/acme
+  * Create and purge directory /var/log/acmetool
+  * Create directory /etc/acme/hooks
+  * Add /usr/lib/tmpfiles.d/acmetool.conf
+  * Add /etc/rsyslog.d/acmetool.conf
+  * Add /etc/logrotate.d/acmetool
+  * Add /etc/nginx/snippets/acmetool.conf
+  * Add /etc/apache2/conf-available/acmetool.conf
+  * Replace Debian with DEB_VENDOR in --version
+  * Add lintian override for spelling false positive
+
+ -- Peter Colberg <peter@colberg.org>  Sun, 08 Jan 2017 23:50:30 -0500
+
 acmetool (0.0.58-4) unstable; urgency=medium
 
   * Skip parseperm test if cgo is disabled
