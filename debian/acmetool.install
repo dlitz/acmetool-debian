@@ -1,2 +1,3 @@
 debian/acmetool.service lib/systemd/system
 debian/acmetool.timer lib/systemd/system
+debian/rsyslog/acmetool.conf etc/rsyslog.d

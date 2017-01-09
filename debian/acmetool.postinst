@@ -6,6 +6,8 @@ if [ "$1" = "configure" ]; then
 	if [ -d /run/systemd/system ]; then
 		systemd-tmpfiles --create --prefix=/var/run/acme || true
 	fi
+
+	invoke-rc.d rsyslog restart || true
 fi
 
 #DEBHELPER#

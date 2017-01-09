@@ -3,6 +3,8 @@
 set -e
 
 if [ "$1" = "purge" ]; then
+	invoke-rc.d rsyslog restart || true
+
 	rm -rf /var/lib/acme /var/log/acmetool
 fi
 
