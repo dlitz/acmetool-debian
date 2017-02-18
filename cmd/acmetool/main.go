@@ -65,9 +65,11 @@ var (
 	quickstartCmd = kingpin.Command("quickstart", "Interactively ask some getting started questions (recommended)")
 	expertFlag    = quickstartCmd.Flag("expert", "Ask more questions in quickstart wizard").Bool()
 
-	redirectorCmd      = kingpin.Command("redirector", "HTTP to HTTPS redirector with challenge response support")
-	redirectorPathFlag = redirectorCmd.Flag("path", "Path to serve challenge files from").String()
-	redirectorGIDFlag  = redirectorCmd.Flag("challenge-gid", "GID to chgrp the challenge path to (optional)").String()
+	redirectorCmd          = kingpin.Command("redirector", "HTTP to HTTPS redirector with challenge response support")
+	redirectorPathFlag     = redirectorCmd.Flag("path", "Path to serve challenge files from").String()
+	redirectorGIDFlag      = redirectorCmd.Flag("challenge-gid", "GID to chgrp the challenge path to (optional)").String()
+	redirectorReadTimeout  = redirectorCmd.Flag("read-timeout", "Maximum duration before timing out read of the request (default: '10s')").Default("10s").Duration()
+	redirectorWriteTimeout = redirectorCmd.Flag("write-timeout", "Maximum duration before timing out write of the request (default: '20s')").Default("20s").Duration()
 
 	testNotifyCmd = kingpin.Command("test-notify", "Test-execute notification hooks as though given hostnames were updated")
 	testNotifyArg = testNotifyCmd.Arg("hostname", "hostnames which have been updated").Strings()
@@ -305,6 +307,20 @@ func cmdAccountThumbprint() {
 }
 
 func cmdWant() {
+	hostnames := *wantArg
+
+	// Ensure all hostnames provided are valid.
+	for idx := range hostnames {
+		norm, err := acmeutils.NormalizeHostname(hostnames[idx])
+		if err != nil {
+			log.Fatalf("invalid hostname: %#v: %v", hostnames[idx], err)
+			return
+		}
+		hostnames[idx] = norm
+	}
+
+	// Determine whether there already exists a target satisfying all given
+	// hostnames or a superset thereof.
 	s, err := storage.NewFDB(*stateFlag)
 	log.Fatale(err, "storage")
 
@@ -315,7 +331,7 @@ func cmdWant() {
 			nm[n] = struct{}{}
 		}
 
-		for _, w := range *wantArg {
+		for _, w := range hostnames {
 			if _, ok := nm[w]; !ok {
 				return nil
 			}
@@ -329,9 +345,10 @@ func cmdWant() {
 		return
 	}
 
+	// Add the target.
 	tgt := storage.Target{
 		Satisfy: storage.TargetSatisfy{
-			Names: *wantArg,
+			Names: hostnames,
 		},
 	}
 
@@ -366,6 +383,8 @@ func cmdRunRedirector() {
 				Bind:          ":80",
 				ChallengePath: rpath,
 				ChallengeGID:  *redirectorGIDFlag,
+				ReadTimeout:   *redirectorReadTimeout,
+				WriteTimeout:  *redirectorWriteTimeout,
 			})
 		},
 	})
@@ -384,7 +403,11 @@ func determineWebroot() string {
 }
 
 func cmdRunTestNotify() {
-	err := hooks.NotifyLiveUpdated(*hooksFlag, *stateFlag, *testNotifyArg)
+	ctx := &hooks.Context{
+		HooksDir: *hooksFlag,
+		StateDir: *stateFlag,
+	}
+	err := hooks.NotifyLiveUpdated(ctx, *testNotifyArg)
 	log.Errore(err, "notify")
 }
 
