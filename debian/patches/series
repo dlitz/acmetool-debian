@@ -1,2 +1,3 @@
 go-1.6-text-template.patch
 license.patch
+fix-import-path-of-square-go-jose.patch
