@@ -1,3 +1,18 @@
+acmetool (0.0.59-1) unstable; urgency=medium
+
+  * New upstream release
+    - Validate hostnames in 'acmetool want'
+    - Allow environment variables to be passed to challenge hooks
+    - Allow acmeapi to obtain new nonces if nonce pool is depleted
+    - Don't attempt fdb permission tests on non-cgo builds
+    - Add read/write timeouts to redirector server
+    - Allow hidden files within the state directory
+
+  [ Peter Colberg ]
+  * Fix import path of square/go-jose
+
+ -- Peter Colberg <peter@colberg.org>  Sun, 19 Feb 2017 22:41:49 -0500
+
 acmetool (0.0.58-5) unstable; urgency=medium
 
   * Rewrite README.Debian
