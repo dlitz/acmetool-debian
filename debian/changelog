@@ -1,3 +1,9 @@
+acmetool (0.0.59-1~bpo9+1) stretch-backports; urgency=medium
+
+  * Rebuild for stretch-backports.
+
+ -- Peter Colberg <peter@colberg.org>  Mon, 19 Jun 2017 18:52:55 -0400
+
 acmetool (0.0.59-1) unstable; urgency=medium
 
   * New upstream release
