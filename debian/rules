@@ -11,14 +11,14 @@ GO_LDFLAGS += -X github.com/hlandau/buildinfo.RawBuildInfo=$(shell echo -n 'acme
 	dh $@ --buildsystem=golang --with=golang,apache2
 
 override_dh_auto_build:
-	dh_auto_build -O--buildsystem=golang -- -ldflags "$(GO_LDFLAGS)"
+	dh_auto_build -- -ldflags "$(GO_LDFLAGS)"
 
 # Disable OCSP test to avoid network access
 override_dh_auto_test:
-	dh_auto_test -O--buildsystem=golang -- -run '^Test([^O]|O[^C]|OC[^S]|OCS[^P])'
+	dh_auto_test -- -run '^Test([^O]|O[^C]|OC[^S]|OCS[^P])'
 
 override_dh_auto_install:
-	dh_auto_install -O--buildsystem=golang -- --no-source
+	dh_auto_install -- --no-source
 	mkdir -p debian/acmetool/usr/share/man/man8
 	debian/acmetool/usr/bin/acmetool --help-man > debian/acmetool/usr/share/man/man8/acmetool.8
 
