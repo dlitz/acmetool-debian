@@ -129,6 +129,8 @@ $ sudo pacman -U ./acmetool*.pkg.tar.xz
 
 **Alpine Linux users:** [An APKBUILD for building from source is available.](_doc/APKBUILD)
 
+**FreeBSD users:** [FreeBSD port is available.](http://www.freshports.org/security/acmetool/)
+
 **Building from source:** You will need Go installed to build from source.
 
 If you are on Linux, you will need to make sure the development files for
@@ -136,11 +138,16 @@ If you are on Linux, you will need to make sure the development files for
 `libcap-dev` or `libcap-devel` or similar.
 
 ```bash
+# This is necessary to work around a change in Git's default configuration
+# which hasn't yet been accounted for in some places.
+$ git config --global http.followRedirects true
+
 $ git clone https://github.com/hlandau/acme
 $ cd acme
 $ make && sudo make install
 
   # (People familiar with Go with a GOPATH setup can alternatively use go get/go install:)
+  $ git config --global http.followRedirects true
   $ go get github.com/hlandau/acme/cmd/acmetool
 ```
 
@@ -239,9 +246,8 @@ The [client library which these utilities use](https://github.com/hlandau/acme/t
 
 ## Comparison with...
 
-**Let's Encrypt Official Client:** A heavyweight Python implementation which is
-a bit too “magic” for my tastes. Tries to mutate your webserver configuration
-automatically.
+**certbot:** A heavyweight Python implementation which is a bit too “magic” for
+my tastes. Tries to mutate your webserver configuration automatically.
 
 acmetool is a single-file binary which only depends on basic system libraries
 (on Linux, these are libc, libpthread, libcap, libattr). It doesn't do anything
@@ -270,7 +276,7 @@ short lifetime of certificates issued by Let's Encrypt.
 ### Comparison, list of client implementations
 
 <table>
-<tr><td></td><th>acmetool</th><th><a href="https://github.com/letsencrypt/letsencrypt">letsencrypt</a></th><th><a href="https://github.com/xenolf/lego">lego</a></th><th><a href="https://github.com/diafygi/gethttpsforfree">gethttpsforfree</a></th></tr>
+<tr><td></td><th>acmetool</th><th><a href="https://github.com/certbot/certbot">certbot</a></th><th><a href="https://github.com/xenolf/lego">lego</a></th><th><a href="https://github.com/diafygi/gethttpsforfree">gethttpsforfree</a></th></tr>
 <tr><td>Automatic renewal</td><td>Yes</td><td>Not yet</td><td>No</td><td>No</td></tr>
 <tr><td>SAN support</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
 <tr><td>ECC support</td><td>Yes</td><td>No</td><td>No</td><td>No</td></tr>
